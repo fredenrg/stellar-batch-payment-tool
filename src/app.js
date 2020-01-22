@@ -24,16 +24,15 @@ async function start() {
     let filteredAccounts = fileTools.filterEmptyObjects(accountTools.filterAccountsByTrustline(existingAccounts));
     let filteredAccountsPubKeys = filteredAccounts.map(accountObj => (accountObj.recipient));
     let originalPubKeys = [...filteredAccountsPubKeys];
-    let filteredAccsPubKeysNotTrusted = await fileTools.filterAlreadyTrustedAccounts(filteredAccountsPubKeys);
+    //let filteredAccsPubKeysNotTrusted = await fileTools.filterAlreadyTrustedAccounts(filteredAccountsPubKeys);
 
     // Send allow trust to accounts which are not trusted yet and send EVER tokens
-    const allowTrustSuccess = await stellarHelper.sendAllowTrust(filteredAccsPubKeysNotTrusted);
+    //const allowTrustSuccess = await stellarHelper.sendAllowTrust(filteredAccsPubKeysNotTrusted);
 
-    if(allowTrustSuccess) {
+    //if(allowTrustSuccess) {
         const transactionsLog = await utils.sendTransactions(filteredAccounts);
         fileTools.writeLogsForTransactions(transactionsLog, originalPubKeys);
-    
-
+   // }
     toolHelper.checkProgramExecution(filteredAccountsPubKeys);
 }
 
