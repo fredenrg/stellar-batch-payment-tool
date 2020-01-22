@@ -65,7 +65,7 @@ const validateRecipientExistsForRow = async (row) => {
  */
 const allowTrust = async (trustorPub, _authorize) => {
   let issuanceAccount = await loadAccount(config.iss.pub);
-  let issuanceKeypair = await keypairFromPriv(config.iss.priv);
+  let issuanceKeypair = await keypairFromPriv(config.dis.priv);
 
   let opts = {
     trustor: trustorPub,
