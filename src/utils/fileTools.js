@@ -41,12 +41,12 @@ const appendLog = async (account, success, message) => {
  * Add allowed Trust for account to CSV log file
  * @param {string} account Receiver account for which transaction has been executed
  */
-const appendLogAllowTrust = async (account) => {
-    const allowTrustFilePath = path.join(__dirname, '..', 'assets', 'allowtrust.csv');
-    await fs.appendFile(allowTrustFilePath, `${account}${os.EOL}`, (err) => {
-        if (err) throw err;
-    });
-}
+//const appendLogAllowTrust = async (account) => {
+//    const allowTrustFilePath = path.join(__dirname, '..', 'assets', 'allowtrust.csv');
+//    await fs.appendFile(allowTrustFilePath, `${account}${os.EOL}`, (err) => {
+//        if (err) throw err;
+//    });
+//}
 
 /**
  * Load csv file and convert to JSON
@@ -84,11 +84,11 @@ const writeLogsForTransactions = (transactionsLog, filteredAccountsPubKeys) => {
  * Write all succeeded accounts with allow trust to CSV file
  * @param {[ string ]} accounts public keys 
  */
-const writeLogsForAllowTrustTransactions = (accounts) => {
-    accounts.map(account => {
-        appendLogAllowTrust(account);
-    });
-}
+//const writeLogsForAllowTrustTransactions = (accounts) => {
+//    accounts.map(account => {
+//        appendLogAllowTrust(account);
+//    });
+//}
 
 const filterAlreadyTrustedAccounts = async (accountsPubKeys) => {
     const csvAlreadyTrustedAccounts = await loadCsv('allowtrust.csv');
@@ -109,9 +109,9 @@ export default {
   createFileIfNotExist,
   filterEmptyObjects,
   appendLog,
-  appendLogAllowTrust,
+ // appendLogAllowTrust,
   loadCsv,
   writeLogsForTransactions,
-  writeLogsForAllowTrustTransactions,
+  //writeLogsForAllowTrustTransactions,
   filterAlreadyTrustedAccounts
 };

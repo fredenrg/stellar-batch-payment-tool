@@ -126,7 +126,7 @@ const validateRecipientExistsForRow = async (row) => {
  * @param {string} priv secret key
  * @return {Stellar.Keypair}
  */
-//const keypairFromPriv = async (priv) => Stellar.Keypair.fromSecret(priv);
+const keypairFromPriv = async (priv) => Stellar.Keypair.fromSecret(priv);
 
 /**
  * Create a custom Asset object
