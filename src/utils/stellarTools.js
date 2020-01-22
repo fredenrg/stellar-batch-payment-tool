@@ -26,9 +26,9 @@ if (config.testnet) {
 //        }, 500);
 //    });
 //}
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
+//const sleep = (milliseconds) => {
+//    return new Promise(resolve => setTimeout(resolve, milliseconds))
+//}
 
 const loadAccount = async (pub) => server.loadAccount(pub);
 
@@ -40,7 +40,7 @@ const loadAccount = async (pub) => server.loadAccount(pub);
 
 const validateRecipientExists = async (pub) => {
   try {
-      return await sleep(100); server.loadAccount(pub);
+      return await server.loadAccount(pub);
   } catch (err) {
     return false;
   }
@@ -165,7 +165,7 @@ const makePayment = async (srcAcc, keypair, des, amount, asset) => {
  * @param {[ { recipient:string, amount:string, account: Stellar.Account } ]} filteredAccounts 
  */
 async function sendTransactions(filteredAccounts) {
-    await sleep(100);
+    //await sleep(100);
   let assetObject = await createAssetObject(config.asset.code, config.iss.pub);
   let funderKeypair = await keypairFromPriv(config.dis.priv);
   let distributorAccount = await loadAccount(config.dis.pub);
