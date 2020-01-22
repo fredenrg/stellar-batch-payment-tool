@@ -193,6 +193,6 @@ export default {
   validateRecipientExists,
   validateRecipientExistsForRow,
   //createAccount,
-  sendTransactions
-  //allowTrust
+  sendTransactions,
+  allowTrust
 };
