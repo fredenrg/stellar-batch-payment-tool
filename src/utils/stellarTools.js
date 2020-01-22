@@ -40,7 +40,7 @@ const loadAccount = async (pub) => server.loadAccount(pub);
 
 const validateRecipientExists = async (pub) => {
   try {
-      return await sleep(500); server.loadAccount(pub);
+      return await sleep(100); server.loadAccount(pub);
   } catch (err) {
     return false;
   }
@@ -93,7 +93,7 @@ const validateRecipientExistsForRow = async (row) => {
 
 /**
  * Create account by funding it from stellar distribution account
- * @param {string} funderPriv 
+ //* @param {string} funderPriv 
  * @param {string} recipient 
  * @return {boolean} indicates if creation is successful
  */
@@ -145,13 +145,6 @@ const createAssetObject = (code, issuer) => new Stellar.Asset(code, issuer);
  * @param {Stellar.Asset} asset Asset object
  * @return {boolean} Indicates success of completion
  */
-//function makePayment() {
-//    return new Promise(resolve => {
-//        setTimeout(() => {
-//            resolve('transaction');
-//        }, 600);
-//    });
-//}
 const makePayment = async (srcAcc, keypair, des, amount, asset) => {
   //const srcAcc = await loadAccount(src);
   const transaction = new Stellar.TransactionBuilder(srcAcc)
@@ -172,7 +165,7 @@ const makePayment = async (srcAcc, keypair, des, amount, asset) => {
  * @param {[ { recipient:string, amount:string, account: Stellar.Account } ]} filteredAccounts 
  */
 async function sendTransactions(filteredAccounts) {
-    await sleep(600);
+    await sleep(100);
   let assetObject = await createAssetObject(config.asset.code, config.iss.pub);
   let funderKeypair = await keypairFromPriv(config.dis.priv);
   let distributorAccount = await loadAccount(config.dis.pub);
@@ -187,12 +180,12 @@ async function sendTransactions(filteredAccounts) {
 
 export default {
   loadAccount,
-  //keypairFromPriv,
+  keypairFromPriv,
   makePayment,
   createAssetObject,
   validateRecipientExists,
   validateRecipientExistsForRow,
   //createAccount,
-  sendTransactions,
-  allowTrust
+  sendTransactions
+  //allowTrust
 };
