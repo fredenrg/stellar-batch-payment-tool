@@ -13,6 +13,9 @@ if (config.testnet) {
     server = new Stellar.Server('https://horizon.stellar.org/');
     Stellar.Network.usePublicNetwork();
 }
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
 
 /**
  * Load full account details
@@ -28,7 +31,7 @@ const loadAccount = async (pub) => server.loadAccount(pub);
  */
 const validateRecipientExists = async (pub) => {
   try {
-    return await server.loadAccount(pub);
+      return await sleep(500); server.loadAccount(pub);
   } catch (err) {
     return false;
   }
@@ -60,14 +63,14 @@ const validateRecipientExistsForRow = async (row) => {
  * @param {string} trustorPub the account you want to allow trust from
  * @param {boolean} authorize authorize or deauthorize trust to trustor
  */
-const allowTrust = async (trustorPub, authorize) => {
+const allowTrust = async (trustorPub, _authorize) => {
   let issuanceAccount = await loadAccount(config.iss.pub);
   let issuanceKeypair = await keypairFromPriv(config.iss.priv);
 
   let opts = {
     trustor: trustorPub,
     assetCode: config.asset.code,
-    authorize: true
+    authorize: false
   };
 
   let transaction = new Stellar.TransactionBuilder(issuanceAccount)
@@ -153,6 +156,7 @@ const makePayment = async (srcAcc, keypair, des, amount, asset) => {
  * @param {[ { recipient:string, amount:string, account: Stellar.Account } ]} filteredAccounts 
  */
 async function sendTransactions(filteredAccounts) {
+    await sleep(600);
   let assetObject = await createAssetObject(config.asset.code, config.iss.pub);
   let funderKeypair = await keypairFromPriv(config.dis.priv);
   let distributorAccount = await loadAccount(config.dis.pub);
