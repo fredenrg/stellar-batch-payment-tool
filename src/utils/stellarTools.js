@@ -67,24 +67,24 @@ const validateRecipientExistsForRow = async (row) => {
  * @param {string} trustorPub the account you want to allow trust from
  * @param {boolean} authorize authorize or deauthorize trust to trustor
  */
-const allowTrust = async (trustorPub, authorize) => {
-  let issuanceAccount = await loadAccount(config.iss.pub);
-  let issuanceKeypair = await keypairFromPriv(config.iss.priv);
+//const allowTrust = async (trustorPub, authorize) => {
+//  let issuanceAccount = await loadAccount(config.iss.pub);
+//  //let issuanceKeypair = await keypairFromPriv(config.iss.priv);
 
-  let opts = {
-    trustor: trustorPub,
-    assetCode: config.asset.code,
-    authorize: false
-  };
+//  let opts = {
+//    trustor: trustorPub,
+//    assetCode: config.asset.code,
+//    authorize: false
+//  };
 
-  let transaction = new Stellar.TransactionBuilder(issuanceAccount)
-    .addOperation(Stellar.Operation.allowTrust(opts))
-    .build();
+//  let transaction = new Stellar.TransactionBuilder(issuanceAccount)
+//    .addOperation(Stellar.Operation.allowTrust(opts))
+//    .build();
 
-  transaction.sign(issuanceKeypair);
+//  transaction.sign(issuanceKeypair);
 
-  return server.submitTransaction(transaction);
-}
+//  return server.submitTransaction(transaction);
+//}
 
 /**
  * Create account by funding it from stellar distribution account
@@ -92,36 +92,36 @@ const allowTrust = async (trustorPub, authorize) => {
  * @param {string} recipient 
  * @return {boolean} indicates if creation is successful
  */
-const createAccount = async (funderPriv, recipient) => {
-  let funderKeypair = await keypairFromPriv(funderPriv);
-  let senderAccount = await loadAccount(funderKeypair.publicKey());
+//const createAccount = async (funderPriv, recipient) => {
+//  let funderKeypair = await keypairFromPriv(funderPriv);
+//  let senderAccount = await loadAccount(funderKeypair.publicKey());
   
-  let transaction = new Stellar.TransactionBuilder(senderAccount)
-      .addOperation(Stellar.Operation.createAccount({
-        destination: recipient,
-        startingBalance: '1.5'  // base amount in XLM
-      }))
-      .build();
+//  let transaction = new Stellar.TransactionBuilder(senderAccount)
+//      .addOperation(Stellar.Operation.createAccount({
+//        destination: recipient,
+//        startingBalance: '1.5'  // base amount in XLM
+//      }))
+//      .build();
   
-  transaction.sign(funderKeypair);
+//  transaction.sign(funderKeypair);
 
 
-  try {
-    const transactionResult = await server.submitTransaction(transaction);
-    return true;
+//  try {
+//    const transactionResult = await server.submitTransaction(transaction);
+//    return true;
     
-  } catch (err) {
-    throw err;
-    return false;
-  }
-}
+//  } catch (err) {
+//    throw err;
+//    return false;
+//  }
+//}
 
 /**
  * Load full Stellar Keypair object from secret
  * @param {string} priv secret key
  * @return {Stellar.Keypair}
  */
-const keypairFromPriv = async (priv) => Stellar.Keypair.fromSecret(priv);
+//const keypairFromPriv = async (priv) => Stellar.Keypair.fromSecret(priv);
 
 /**
  * Create a custom Asset object
@@ -140,8 +140,15 @@ const createAssetObject = (code, issuer) => new Stellar.Asset(code, issuer);
  * @param {Stellar.Asset} asset Asset object
  * @return {boolean} Indicates success of completion
  */
+function makePayment() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('transaction');
+        }, 600);
+    });
+}
 const makePayment = async (srcAcc, keypair, des, amount, asset) => {
-  // const srcAcc = await loadAccount(src);
+  const srcAcc = await loadAccount(src);
   const transaction = new Stellar.TransactionBuilder(srcAcc)
     .addOperation(Stellar.Operation.payment({
       destination: des,
@@ -174,12 +181,12 @@ async function sendTransactions(filteredAccounts) {
 
 export default {
   loadAccount,
-  keypairFromPriv,
+  //keypairFromPriv,
   makePayment,
   createAssetObject,
   validateRecipientExists,
   validateRecipientExistsForRow,
-  createAccount,
-  sendTransactions,
-  allowTrust
+  //createAccount,
+  sendTransactions
+  //allowTrust
 };
