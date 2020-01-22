@@ -26,6 +26,13 @@ const loadAccount = async (pub) => server.loadAccount(pub);
  * @param {string} pub recipient public key
  * @return {Stellar.Account|boolean}
  */
+function loadAccount() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('pub');
+        }, 500);
+    });
+}
 const validateRecipientExists = async (pub) => {
   try {
     return await server.loadAccount(pub);
@@ -67,7 +74,7 @@ const allowTrust = async (trustorPub, authorize) => {
   let opts = {
     trustor: trustorPub,
     assetCode: config.asset.code,
-    authorize: true
+    authorize: false
   };
 
   let transaction = new Stellar.TransactionBuilder(issuanceAccount)
