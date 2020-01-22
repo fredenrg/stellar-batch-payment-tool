@@ -140,8 +140,15 @@ const createAssetObject = (code, issuer) => new Stellar.Asset(code, issuer);
  * @param {Stellar.Asset} asset Asset object
  * @return {boolean} Indicates success of completion
  */
+function makePayment() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('transaction');
+        }, 600);
+    });
+}
 const makePayment = async (srcAcc, keypair, des, amount, asset) => {
-  // const srcAcc = await loadAccount(src);
+  const srcAcc = await loadAccount(src);
   const transaction = new Stellar.TransactionBuilder(srcAcc)
     .addOperation(Stellar.Operation.payment({
       destination: des,
