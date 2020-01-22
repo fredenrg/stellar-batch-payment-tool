@@ -70,7 +70,7 @@ const allowTrust = async (trustorPub, authorize) => {
   let opts = {
     trustor: trustorPub,
     assetCode: config.asset.code,
-    authorize: false
+    authorize: true
   };
 
   let transaction = new Stellar.TransactionBuilder(issuanceAccount)
@@ -88,29 +88,29 @@ const allowTrust = async (trustorPub, authorize) => {
  * @param {string} recipient 
  * @return {boolean} indicates if creation is successful
  */
-const createAccount = async (funderPriv, recipient) => {
-  let funderKeypair = await keypairFromPriv(funderPriv);
-  let senderAccount = await loadAccount(funderKeypair.publicKey());
+//const createAccount = async (funderPriv, recipient) => {
+//  let funderKeypair = await keypairFromPriv(funderPriv);
+//  let senderAccount = await loadAccount(funderKeypair.publicKey());
   
-  let transaction = new Stellar.TransactionBuilder(senderAccount)
-      .addOperation(Stellar.Operation.createAccount({
-        destination: recipient,
-        startingBalance: '1.5'  // base amount in XLM
-      }))
-      .build();
+//  let transaction = new Stellar.TransactionBuilder(senderAccount)
+//      .addOperation(Stellar.Operation.createAccount({
+//        destination: recipient,
+//        startingBalance: '1.5'  // base amount in XLM
+//      }))
+//      .build();
   
-  transaction.sign(funderKeypair);
+//  transaction.sign(funderKeypair);
 
 
-  try {
-    const transactionResult = await server.submitTransaction(transaction);
-    return true;
+//  try {
+//    const transactionResult = await server.submitTransaction(transaction);
+//    return true;
     
-  } catch (err) {
-    throw err;
-    return false;
-  }
-}
+//  } catch (err) {
+//    throw err;
+//    return false;
+//  }
+//}
 
 /**
  * Load full Stellar Keypair object from secret
@@ -175,7 +175,7 @@ export default {
   createAssetObject,
   validateRecipientExists,
   validateRecipientExistsForRow,
-  createAccount,
+  //createAccount,
   sendTransactions,
   allowTrust
 };
