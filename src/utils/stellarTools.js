@@ -63,24 +63,24 @@ const validateRecipientExistsForRow = async (row) => {
  * @param {string} trustorPub the account you want to allow trust from
  * @param {boolean} authorize authorize or deauthorize trust to trustor
  */
-const allowTrust = async (trustorPub, authorize) => {
-  let issuanceAccount = await loadAccount(config.iss.pub);
-  let issuanceKeypair = await keypairFromPriv(config.dis.priv);
+//const allowTrust = async (trustorPub, _authorize) => {
+//  let issuanceAccount = await loadAccount(config.iss.pub);
+//  let issuanceKeypair = await keypairFromPriv(config.iss.priv);
 
-  let opts = {
-    trustor: trustorPub,
-    assetCode: config.asset.code,
-    authorize: true
-  };
+//  let opts = {
+//    trustor: trustorPub,
+//    assetCode: config.asset.code,
+//    authorize: false
+//  };
 
-  let transaction = new Stellar.TransactionBuilder(issuanceAccount)
-    .addOperation(Stellar.Operation.allowTrust(opts))
-    .build();
+//  let transaction = new Stellar.TransactionBuilder(issuanceAccount)
+//    .addOperation(Stellar.Operation.allowTrust(opts))
+//    .build();
 
-  transaction.sign(issuanceKeypair);
+//  transaction.sign(issuanceKeypair);
 
-  return server.submitTransaction(transaction);
-}
+//  return server.submitTransaction(transaction);
+//}
 
 /**
  * Create account by funding it from stellar distribution account
@@ -176,6 +176,6 @@ export default {
   validateRecipientExists,
   validateRecipientExistsForRow,
   //createAccount,
-  sendTransactions,
-  allowTrust
+  sendTransactions
+  //allowTrust
 };
