@@ -19,6 +19,17 @@ if (config.testnet) {
  * @param {string} pub public key
  * @return {Stellar.AccountResponse}
  */
+//function loadAccount() {
+//    return new Promise(resolve => {
+//        setTimeout(() => {
+//            resolve('pub');
+//        }, 500);
+//    });
+//}
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
 const loadAccount = async (pub) => server.loadAccount(pub);
 
 /**
@@ -26,16 +37,10 @@ const loadAccount = async (pub) => server.loadAccount(pub);
  * @param {string} pub recipient public key
  * @return {Stellar.Account|boolean}
  */
-function loadAccount() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve('pub');
-        }, 500);
-    });
-}
+
 const validateRecipientExists = async (pub) => {
   try {
-    return await server.loadAccount(pub);
+      return await sleep(500); server.loadAccount(pub);
   } catch (err) {
     return false;
   }
@@ -140,15 +145,15 @@ const createAssetObject = (code, issuer) => new Stellar.Asset(code, issuer);
  * @param {Stellar.Asset} asset Asset object
  * @return {boolean} Indicates success of completion
  */
-function makePayment() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve('transaction');
-        }, 600);
-    });
-}
+//function makePayment() {
+//    return new Promise(resolve => {
+//        setTimeout(() => {
+//            resolve('transaction');
+//        }, 600);
+//    });
+//}
 const makePayment = async (srcAcc, keypair, des, amount, asset) => {
-  const srcAcc = await loadAccount(src);
+  //const srcAcc = await loadAccount(src);
   const transaction = new Stellar.TransactionBuilder(srcAcc)
     .addOperation(Stellar.Operation.payment({
       destination: des,
@@ -167,6 +172,7 @@ const makePayment = async (srcAcc, keypair, des, amount, asset) => {
  * @param {[ { recipient:string, amount:string, account: Stellar.Account } ]} filteredAccounts 
  */
 async function sendTransactions(filteredAccounts) {
+    await sleep(600);
   let assetObject = await createAssetObject(config.asset.code, config.iss.pub);
   let funderKeypair = await keypairFromPriv(config.dis.priv);
   let distributorAccount = await loadAccount(config.dis.pub);
